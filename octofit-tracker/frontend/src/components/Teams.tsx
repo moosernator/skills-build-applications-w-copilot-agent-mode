@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 
 const codespaceName = import.meta.env.VITE_CODESPACE_NAME
-const apiBaseUrl = codespaceName
-  ? `https://${codespaceName}-8000.app.github.dev/api`
-  : 'http://localhost:8000/api'
-const endpoint = `${apiBaseUrl}/teams`
+const endpoint = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev/api/teams`
+  : 'http://localhost:8000/api/teams'
 
 const getResponseArray = (body: any) => {
   if (Array.isArray(body)) return body
@@ -22,7 +21,7 @@ const formatMembers = (members: any) => {
     .join(', ')
 }
 
-const Teams = ({ apiBaseUrl }: TeamsProps) => {
+const Teams = () => {
   const [teams, setTeams] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -46,7 +45,7 @@ const Teams = ({ apiBaseUrl }: TeamsProps) => {
     }
 
     fetchTeams()
-  }, [apiBaseUrl])
+  }, [endpoint])
 
   return (
     <section>

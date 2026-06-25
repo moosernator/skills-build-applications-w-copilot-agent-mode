@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 
 const codespaceName = import.meta.env.VITE_CODESPACE_NAME
-const apiBaseUrl = codespaceName
-  ? `https://${codespaceName}-8000.app.github.dev/api`
-  : 'http://localhost:8000/api'
-const endpoint = `${apiBaseUrl}/users`
+const endpoint = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev/api/users`
+  : 'http://localhost:8000/api/users'
 
 const getResponseArray = (body: any) => {
   if (Array.isArray(body)) return body
@@ -38,7 +37,7 @@ const Users = () => {
     }
 
     fetchUsers()
-  }, [apiBaseUrl])
+  }, [endpoint])
 
   return (
     <section>
