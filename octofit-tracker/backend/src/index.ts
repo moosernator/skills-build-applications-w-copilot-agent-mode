@@ -1,7 +1,7 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import router from './routes.ts';
-import { PORT, MONGO_URI, API_BASE_URL } from './config.ts';
+import { PORT, API_BASE_URL } from './config.ts';
+import { connectDatabase } from './database.ts';
 
 const app = express();
 
@@ -17,10 +17,8 @@ app.get('/', (req, res) => {
 
 const start = async () => {
   try {
-    await mongoose.connect(MONGO_URI);
-    console.log(`Connected to MongoDB at ${MONGO_URI}`);
+    await connectDatabase();
   } catch (error) {
-    console.error('MongoDB connection error:', error);
     process.exit(1);
   }
 

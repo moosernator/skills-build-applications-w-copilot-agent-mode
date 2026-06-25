@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
-import { MONGO_URI } from '../config.ts';
+import { connectDatabase, disconnectDatabase } from '../database.ts';
 import { UserModel } from '../models/user.ts';
 import { TeamModel } from '../models/team.ts';
 import { ActivityModel } from '../models/activity.ts';
@@ -10,9 +9,9 @@ import { LeaderboardModel } from '../models/leaderboard.ts';
  * Seed the octofit_db database with test data.
  */
 const seed = async () => {
-  await mongoose.connect(MONGO_URI);
+  await connectDatabase();
 
-  console.log('Connected to MongoDB for seeding:', MONGO_URI);
+  console.log('Connected to MongoDB for seeding');
 
   await Promise.all([
     UserModel.deleteMany({}),
@@ -96,7 +95,7 @@ const seed = async () => {
     leaderboardEntries: leaderboardEntries.length,
   });
 
-  await mongoose.disconnect();
+  await disconnectDatabase();
   console.log('Disconnected from MongoDB after seeding.');
 };
 
