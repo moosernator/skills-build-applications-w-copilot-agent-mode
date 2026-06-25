@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 
 const codespaceName = import.meta.env.VITE_CODESPACE_NAME
 const endpoint = codespaceName
-  ? `https://${codespaceName}-8000.app.github.dev/api/teams/`
-  : 'http://localhost:8000/api/teams/'
+  ? `https://${codespaceName}-8000.app.github.dev/api/leaderboard/`
+  : 'http://localhost:8000/api/leaderboard/'
 
-const getResponseArray = (body: any) => {
+const getResponseArray = (body) => {
   if (Array.isArray(body)) return body
   if (Array.isArray(body?.data)) return body.data
   if (Array.isArray(body?.items)) return body.items
@@ -13,66 +13,62 @@ const getResponseArray = (body: any) => {
   return []
 }
 
-const formatMembers = (members: any) => {
-  if (!Array.isArray(members)) return 'N/A'
-  return members
-    .map((member) => member?.username ?? member?.email ?? member)
-    .filter(Boolean)
-    .join(', ')
-}
+const formatUser = (user) => user?.username ?? user?.email ?? 'Unknown'
 
-const Teams = () => {
-  const [teams, setTeams] = useState<any[]>([])
+const Leaderboard = () => {
+  const [entries, setEntries] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    const fetchTeams = async () => {
+    const fetchLeaderboard = async () => {
       try {
         setLoading(true)
         setError(null)
         const response = await fetch(endpoint)
         if (!response.ok) {
-          throw new Error(`Failed to load teams: ${response.status}`)
+          throw new Error(`Failed to load leaderboard: ${response.status}`)
         }
         const body = await response.json()
-        setTeams(getResponseArray(body))
+        setEntries(getResponseArray(body))
       } catch (err) {
-        setError((err as Error).message)
+        setError((err).message)
       } finally {
         setLoading(false)
       }
     }
 
-    fetchTeams()
+    fetchLeaderboard()
   }, [endpoint])
 
   return (
     <section>
-      <h2>Teams</h2>
-      {loading && <p>Loading teams...</p>}
+      <h2>Leaderboard</h2>
+      {loading && <p>Loading leaderboard...</p>}
       {error && <p className="error">{error}</p>}
       {!loading && !error && (
         <table>
           <thead>
             <tr>
-              <th>Team</th>
-              <th>Members</th>
+              <th>Rank</th>
+              <th>User</th>
+              <th>Score</th>
             </tr>
           </thead>
           <tbody>
-            {teams.map((team) => (
-              <tr key={team._id ?? team.name ?? JSON.stringify(team)}>
-                <td>{team.name}</td>
-                <td>{formatMembers(team.members)}</td>
+            {entries.map((entry) => (
+              <tr key={entry._id ?? `${entry.rank}-${entry.score}`}>
+                <td>{entry.rank}</td>
+                <td>{formatUser(entry.user)}</td>
+                <td>{entry.score}</td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
-      {!loading && !error && teams.length === 0 && <p>No teams found.</p>}
+      {!loading && !error && entries.length === 0 && <p>No leaderboard entries found.</p>}
     </section>
   )
 }
 
-export default Teams
+export default Leaderboard

@@ -5,7 +5,7 @@ const endpoint = codespaceName
   ? `https://${codespaceName}-8000.app.github.dev/api/activities/`
   : 'http://localhost:8000/api/activities/'
 
-const getResponseArray = (body: any) => {
+const getResponseArray = (body) => {
   if (Array.isArray(body)) return body
   if (Array.isArray(body?.data)) return body.data
   if (Array.isArray(body?.items)) return body.items
@@ -13,12 +13,12 @@ const getResponseArray = (body: any) => {
   return []
 }
 
-const formatUser = (user: any) => user?.username ?? user?.email ?? 'Unknown'
+const formatUser = (user) => user?.username ?? user?.email ?? 'Unknown'
 
 const Activities = () => {
-  const [activities, setActivities] = useState<any[]>([])
+  const [activities, setActivities] = useState ([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState < string | null > (null)
 
   useEffect(() => {
     const fetchActivities = async () => {
@@ -32,7 +32,7 @@ const Activities = () => {
         const body = await response.json()
         setActivities(getResponseArray(body))
       } catch (err) {
-        setError((err as Error).message)
+        setError((err).message)
       } finally {
         setLoading(false)
       }

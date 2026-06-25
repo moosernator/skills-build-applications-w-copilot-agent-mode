@@ -5,7 +5,7 @@ const endpoint = codespaceName
   ? `https://${codespaceName}-8000.app.github.dev/api/users/`
   : 'http://localhost:8000/api/users/'
 
-const getResponseArray = (body: any) => {
+const getResponseArray = (body) => {
   if (Array.isArray(body)) return body
   if (Array.isArray(body?.data)) return body.data
   if (Array.isArray(body?.items)) return body.items
@@ -14,7 +14,7 @@ const getResponseArray = (body: any) => {
 }
 
 const Users = () => {
-  const [users, setUsers] = useState<any[]>([])
+  const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -30,7 +30,7 @@ const Users = () => {
         const body = await response.json()
         setUsers(getResponseArray(body))
       } catch (err) {
-        setError((err as Error).message)
+        setError((err).message)
       } finally {
         setLoading(false)
       }
