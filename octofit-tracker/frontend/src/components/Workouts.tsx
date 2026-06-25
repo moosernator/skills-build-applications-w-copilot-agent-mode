@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 
-interface WorkoutsProps {
-  apiBaseUrl: string
-}
+const codespaceName = import.meta.env.VITE_CODESPACE_NAME
+const apiBaseUrl = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev/api`
+  : 'http://localhost:8000/api'
+const endpoint = `${apiBaseUrl}/workouts`
 
 const getResponseArray = (body: any) => {
   if (Array.isArray(body)) return body
@@ -14,7 +16,7 @@ const getResponseArray = (body: any) => {
 
 const formatUser = (user: any) => user?.username ?? user?.email ?? 'Unknown'
 
-const Workouts = ({ apiBaseUrl }: WorkoutsProps) => {
+const Workouts = () => {
   const [workouts, setWorkouts] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -24,7 +26,7 @@ const Workouts = ({ apiBaseUrl }: WorkoutsProps) => {
       try {
         setLoading(true)
         setError(null)
-        const response = await fetch(`${apiBaseUrl}/workouts`)
+        const response = await fetch(endpoint)
         if (!response.ok) {
           throw new Error(`Failed to load workouts: ${response.status}`)
         }

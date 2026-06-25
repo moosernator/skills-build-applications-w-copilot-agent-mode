@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 
-interface LeaderboardProps {
-  apiBaseUrl: string
-}
+const codespaceName = import.meta.env.VITE_CODESPACE_NAME
+const apiBaseUrl = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev/api`
+  : 'http://localhost:8000/api'
+const endpoint = `${apiBaseUrl}/leaderboard`
 
 const getResponseArray = (body: any) => {
   if (Array.isArray(body)) return body
@@ -14,7 +16,7 @@ const getResponseArray = (body: any) => {
 
 const formatUser = (user: any) => user?.username ?? user?.email ?? 'Unknown'
 
-const Leaderboard = ({ apiBaseUrl }: LeaderboardProps) => {
+const Leaderboard = () => {
   const [entries, setEntries] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -24,7 +26,7 @@ const Leaderboard = ({ apiBaseUrl }: LeaderboardProps) => {
       try {
         setLoading(true)
         setError(null)
-        const response = await fetch(`${apiBaseUrl}/leaderboard`)
+        const response = await fetch(endpoint)
         if (!response.ok) {
           throw new Error(`Failed to load leaderboard: ${response.status}`)
         }

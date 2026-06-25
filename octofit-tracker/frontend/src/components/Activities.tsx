@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 
-interface ActivitiesProps {
-  apiBaseUrl: string
-}
+const codespaceName = import.meta.env.VITE_CODESPACE_NAME
+const apiBaseUrl = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev/api`
+  : 'http://localhost:8000/api'
+const endpoint = `${apiBaseUrl}/activities`
 
 const getResponseArray = (body: any) => {
   if (Array.isArray(body)) return body
@@ -14,7 +16,7 @@ const getResponseArray = (body: any) => {
 
 const formatUser = (user: any) => user?.username ?? user?.email ?? 'Unknown'
 
-const Activities = ({ apiBaseUrl }: ActivitiesProps) => {
+const Activities = () => {
   const [activities, setActivities] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -24,7 +26,7 @@ const Activities = ({ apiBaseUrl }: ActivitiesProps) => {
       try {
         setLoading(true)
         setError(null)
-        const response = await fetch(`${apiBaseUrl}/activities`)
+        const response = await fetch(endpoint)
         if (!response.ok) {
           throw new Error(`Failed to load activities: ${response.status}`)
         }

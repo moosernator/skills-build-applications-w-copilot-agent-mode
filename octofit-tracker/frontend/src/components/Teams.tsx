@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 
-interface TeamsProps {
-  apiBaseUrl: string
-}
+const codespaceName = import.meta.env.VITE_CODESPACE_NAME
+const apiBaseUrl = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev/api`
+  : 'http://localhost:8000/api'
+const endpoint = `${apiBaseUrl}/teams`
 
 const getResponseArray = (body: any) => {
   if (Array.isArray(body)) return body
@@ -30,7 +32,7 @@ const Teams = ({ apiBaseUrl }: TeamsProps) => {
       try {
         setLoading(true)
         setError(null)
-        const response = await fetch(`${apiBaseUrl}/teams`)
+        const response = await fetch(endpoint)
         if (!response.ok) {
           throw new Error(`Failed to load teams: ${response.status}`)
         }

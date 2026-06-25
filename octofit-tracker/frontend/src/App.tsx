@@ -46,11 +46,11 @@ function App() {
       <main className="app-main">
         <Routes>
           <Route path="/" element={<Navigate replace to="/users" />} />
-          <Route path="/users" element={<Users apiBaseUrl={apiBaseUrl} />} />
-          <Route path="/teams" element={<Teams apiBaseUrl={apiBaseUrl} />} />
-          <Route path="/activities" element={<Activities apiBaseUrl={apiBaseUrl} />} />
-          <Route path="/workouts" element={<Workouts apiBaseUrl={apiBaseUrl} />} />
-          <Route path="/leaderboard" element={<Leaderboard apiBaseUrl={apiBaseUrl} />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/teams" element={<Teams />} />
+          <Route path="/activities" element={<Activities />} />
+          <Route path="/workouts" element={<Workouts />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="*" element={<Navigate replace to="/users" />} />
         </Routes>
       </main>
