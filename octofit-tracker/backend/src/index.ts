@@ -1,22 +1,32 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import router from './routes.js';
+import { PORT, MONGO_URI, API_BASE_URL } from './config.js';
 
 const app = express();
-const port = process.env.PORT ? Number(process.env.PORT) : 8000;
-const mongoUri = process.env.MONGO_URI ?? 'mongodb://127.0.0.1:27017/octofit';
 
 app.use(express.json());
+app.use('/api', router);
 
 app.get('/', (req, res) => {
-  res.send({ message: 'OctoFit Tracker backend is running.' });
+  res.send({
+    message: 'OctoFit Tracker backend is running.',
+    apiBaseUrl: API_BASE_URL,
+  });
 });
 
-app.listen(port, async () => {
+const start = async () => {
   try {
-    await mongoose.connect(mongoUri);
-    console.log(`Connected to MongoDB at ${mongoUri}`);
+    await mongoose.connect(MONGO_URI);
+    console.log(`Connected to MongoDB at ${MONGO_URI}`);
   } catch (error) {
     console.error('MongoDB connection error:', error);
+    process.exit(1);
   }
-  console.log(`Backend listening on http://localhost:${port}`);
-});
+
+  app.listen(PORT, () => {
+    console.log(`Backend listening on ${API_BASE_URL}`);
+  });
+};
+
+start();
