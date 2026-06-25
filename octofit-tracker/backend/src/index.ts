@@ -1,7 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import router from './routes.js';
-import { PORT, MONGO_URI, API_BASE_URL } from './config.js';
+import router from './routes.ts';
+import { PORT, MONGO_URI, API_BASE_URL } from './config.ts';
 
 const app = express();
 

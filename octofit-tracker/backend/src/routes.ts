@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { UserModel } from './models/user.js';
-import { TeamModel } from './models/team.js';
-import { ActivityModel } from './models/activity.js';
-import { LeaderboardModel } from './models/leaderboard.js';
-import { WorkoutModel } from './models/workout.js';
+import { UserModel } from './models/user.ts';
+import { TeamModel } from './models/team.ts';
+import { ActivityModel } from './models/activity.ts';
+import { LeaderboardModel } from './models/leaderboard.ts';
+import { WorkoutModel } from './models/workout.ts';
 
 const router = Router();
 
