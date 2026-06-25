@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 
 const codespaceName = import.meta.env.VITE_CODESPACE_NAME
 const endpoint = codespaceName
-  ? `https://${codespaceName}-8000.app.github.dev/api/teams`
-  : 'http://localhost:8000/api/teams'
+  ? `https://${codespaceName}-8000.app.github.dev/api/teams/`
+  : 'http://localhost:8000/api/teams/'
 
 const getResponseArray = (body: any) => {
   if (Array.isArray(body)) return body

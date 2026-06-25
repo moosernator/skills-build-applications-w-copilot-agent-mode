@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 
 const codespaceName = import.meta.env.VITE_CODESPACE_NAME
 const endpoint = codespaceName
-  ? `https://${codespaceName}-8000.app.github.dev/api/workouts`
-  : 'http://localhost:8000/api/workouts'
+  ? `https://${codespaceName}-8000.app.github.dev/api/workouts/`
+  : 'http://localhost:8000/api/workouts/'
 
 const getResponseArray = (body: any) => {
   if (Array.isArray(body)) return body
