@@ -1,7 +1,7 @@
 import express from 'express';
 import router from './routes.ts';
 import { PORT, API_BASE_URL } from './config.ts';
-import { connectDatabase } from './database.ts';
+import { connectDatabase } from './config/database.ts';
 
 const app = express();
 

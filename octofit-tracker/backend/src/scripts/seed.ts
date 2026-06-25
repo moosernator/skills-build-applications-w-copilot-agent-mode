@@ -1,4 +1,4 @@
-import { connectDatabase, disconnectDatabase } from '../database.ts';
+import { connectDatabase, disconnectDatabase } from '../config/database.ts';
 import { UserModel } from '../models/user.ts';
 import { TeamModel } from '../models/team.ts';
 import { ActivityModel } from '../models/activity.ts';
