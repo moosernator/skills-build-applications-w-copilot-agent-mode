@@ -4,5 +4,4 @@ export const API_BASE_URL = codespaceName
   : 'http://localhost:8000';
 
 export const PORT = process.env.PORT ? Number(process.env.PORT) : 8000;
-export const DATABASE_NAME = 'octofit_db';
-export const MONGO_URI = process.env.MONGO_URI ?? `mongodb://127.0.0.1:27017/${DATABASE_NAME}`;
+export const MONGO_URI = process.env.MONGO_URI ?? `mongodb://127.0.0.1:27017/octofit_db`;
